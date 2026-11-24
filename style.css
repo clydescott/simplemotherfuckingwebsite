@@ -1,0 +1,80 @@
+
+:root { --bg: #fff; --fg: #111; --dim: #555; --code: #f0f0f0; --link: #00e; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #151515; --fg: #e4e4e4; --dim: #9a9a9a; --code: #262626; --link: #8ab4ff; }
+}
+:root[data-theme="dark"] { --bg: #151515; --fg: #e4e4e4; --dim: #9a9a9a; --code: #262626; --link: #8ab4ff; }
+
+body { background: var(--bg); color: var(--fg); font: 1.125rem/1.6 Georgia, "Times New Roman", serif; max-width: 90rem; margin: 0 auto; padding: 2rem 1rem 4rem; }
+h1, h2, h3 { line-height: 1.2; }
+h2 { margin-top: 3rem; }
+a { color: var(--link); }
+pre { background: var(--code); padding: 1rem; overflow-x: auto; font: .85rem/1.5 ui-monospace, Menlo, Consolas, monospace; }
+pre.license { white-space: pre-wrap; width: fit-content; max-width: 100%; box-sizing: border-box; }
+code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9em; }
+:not(pre) > code { background: var(--code); padding: .1em .3em; }
+summary { cursor: pointer; font-weight: bold; }
+details { margin: 1rem 0; margin-inline-start: 1.5rem; }
+nav { font-size: .95rem; }
+body:has(#full-width:checked) { max-width: none; }
+@media (max-width: 92rem) { .full-width-toggle { display: none; } }
+footer { margin-top: 4rem; color: var(--dim); font-size: .95rem; }
+.gallery { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 1.5rem 0; }
+details > .gallery { margin-inline-start: -1.5rem; } /* undo the details indent */
+.gallery figure { flex: 1 1 18rem; margin: 0; }
+.gallery img { max-width: 100%; height: auto; }
+
+.emphatic-capitalization {
+font-style: normal;
+}
+
+@property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.crazy {
+  display: inline-block; position: relative; white-space: nowrap;
+  padding: 0 .4em; border: .12em solid transparent; border-radius: .5em;
+  background:
+    radial-gradient(#fff6 .5px, transparent 1px) 0 0 / 7px 7px padding-box,
+    radial-gradient(#ffb3ec55 .5px, transparent 1px) 3px 4px / 11px 9px padding-box,
+    radial-gradient(circle at 30% 20%, #3a1060, #0b0420 70%) padding-box,
+    conic-gradient(from var(--spin), #ff2e88, #ffb800, #3dff8a, #00d4ff, #a35bff, #ff2e88) border-box;
+  box-shadow: 0 .2em 0 #2a0a4a, 0 .35em .8em #0008, 0 0 .8em #ff2e8866, 0 0 1.6em #00d4ff44;
+  transform: perspective(20em) rotateX(10deg) rotateY(-12deg);
+  & > span {
+    position: relative; color: transparent;
+    font: italic 900 1.05em/1.3 "Arial Black", Impact, system-ui, sans-serif;
+    background: linear-gradient(90deg, #ff7ab6, #ffd84a, #7dffb0, #6fe3ff, #c79bff, #ff7ab6) 0 0 / 10em 100% repeat-x;
+    -webkit-background-clip: text; background-clip: text;
+    filter: drop-shadow(1px 1px 0 #ff2e88) drop-shadow(1px 1px 0 #b01cff) drop-shadow(1px 1px 0 #3b0aa8) drop-shadow(0 0 .25em #fff6);
+    &::before, &::after {
+      content: ""; position: absolute; width: .6em; aspect-ratio: 1;
+      background: radial-gradient(#fff, #ffe680 60%, #ffb800);
+      clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+    }
+    &::before { top: -.45em; right: -.55em; }
+    &::after { bottom: -.4em; left: -.5em; width: .45em; }
+  }
+  &::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(110deg, transparent 40%, #ffffff59 50%, transparent 60%) 0 0 / 300% 100% no-repeat;
+  }
+}
+@keyframes crazy-border { to { --spin: 360deg; } }
+@keyframes crazy-wobble { 50% { transform: perspective(20em) rotateX(-8deg) rotateY(14deg) scale(1.08); } }
+@keyframes crazy-rainbow { to { background-position: 10em 0; } }
+@keyframes crazy-shine { 60%, 100% { background-position: 100% 0; } }
+@keyframes crazy-twinkle { 50% { transform: scale(.2) rotate(90deg); opacity: .4; } }
+@media (prefers-reduced-motion: no-preference) {
+    .crazy {
+    animation: crazy-border 2.5s linear 2, crazy-wobble 2.5s ease-in-out 2;
+    &::after { animation: crazy-shine 1.25s ease-in-out 4; }
+    & > span { animation: crazy-rainbow 2.5s linear 2; }
+    & > span::before { animation: crazy-twinkle 1.25s ease-in-out 4; }
+    & > span::after { animation: crazy-twinkle 1.25s ease-in-out .6s 3; }
+    &:hover, &:hover::after, &:hover > span, &:hover > span::before, &:hover > span::after { animation-iteration-count: infinite; }
+  }
+}
+@media (forced-colors: active) {
+  .crazy { background: Canvas; border-color: CanvasText; box-shadow: none; transform: none;
+    & > span { background: none; color: CanvasText; filter: none; }
+    &::after, & > span::before, & > span::after { display: none; } }
+}
